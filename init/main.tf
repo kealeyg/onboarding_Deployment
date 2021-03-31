@@ -68,12 +68,6 @@ module "init" {
   providers = {azurerm.sub  = azurerm.ScSc-PBMMVDCSandbox}
 }
 
-/* IaaS
-------------------------------------------------------------------*/
-module "iaas" {
-  source = "../onboarding_Iaas/"
-}
-
 /* Output
 ------------------------------------------------------------------*/
 output "init" {value = module.init.moduleOutput}
