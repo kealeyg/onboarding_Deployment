@@ -1,0 +1,16 @@
+{
+    "globals" : {
+        "tags" : {
+            "env" : "dev",
+            "classification" : "pbmm",
+            "owner" : "gerald.hill@canada.ca",
+            "contact" : "greg.kealey@canada.ca",
+            "deployment" : "azure-bca-iac-2021-03-27"
+        },
+        "env" : "ScDc",
+        "group" : "CTO",
+        "project" : "MW"
+    },
+    "user" : "testuserIN",
+    "pwd" : "testpwdIN"
+}

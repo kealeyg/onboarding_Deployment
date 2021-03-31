@@ -1,31 +1,14 @@
 /* Variables
 ------------------------------------------------------------------*/
 variable devSandbox {}
-locals {sub = jsondecode(var.devSandbox)}
-
-/* Config
-------------------------------------------------------------------*/
-variable "globals" {
-  default = {
-    tags = {
-      env            = "dev"
-      classification = "pbmm"
-      owner          = "gerald.hill@canada.ca"
-      contact        = "gregory.kealey@canada.ca"
-      deployment     = "azure-bca-iac-2021-03-27"
-    }
-    env     = "ScDc"
-    group   = "CTO"
-    project = "MW"
-  }
+locals {
+  sub = jsondecode(var.devSandbox)
+  config = jsondecode(file("../config.json"))
 }
-variable "user" {default = ""} # Change to "" after first deployment
-variable "pwd" {default = ""} # Change to "" after first depployment
 
 /* Provider
 ------------------------------------------------------------------*/
 provider "azurerm" {
-  version  = ">=2.2.0"
   alias = "ScSc-PBMMVDCSandbox"
   features {}
   subscription_id = local.sub.subscription_id
@@ -37,21 +20,21 @@ provider "azurerm" {
 /* Data
 ------------------------------------------------------------------*/
 data "azurerm_key_vault" "keyvault" {
-  count = "${var.user == "" ? 1 : 0}"
-  name = join("", [var.globals.env,"CSV","-",var.globals.group,"-",var.globals.project,"-","kv"])
-  resource_group_name = join("", [var.globals.env,"-",var.globals.group,"-",var.globals.project,"_test","-","rg"])
+  count = local.config.user == "" ? 1 : 0
+  name = join("", [local.config.globals.env,"CSV","-",local.config.globals.group,"-",local.config.globals.project,"-","kv"])
+  resource_group_name = join("", [local.config.globals.env,"-",local.config.globals.group,"-",local.config.globals.project,"_test","-","rg"])
   provider = azurerm.ScSc-PBMMVDCSandbox
 }
 data "azurerm_key_vault_secret" "user" {
-  count = "${var.user == "" ? 1 : 0}"
-  name = join("", [var.globals.env,"-",var.globals.project,"-","deploy","-","admin"])
-  key_vault_id = "${data.azurerm_key_vault.keyvault[0].id}"
+  count = local.config.user == "" ? 1 : 0
+  name = join("", [local.config.globals.env,"-",local.config.globals.project,"-","deploy","-","admin"])
+  key_vault_id = data.azurerm_key_vault.keyvault[0].id
   provider = azurerm.ScSc-PBMMVDCSandbox
 }
 data "azurerm_key_vault_secret" "pwd" {
-  count = "${var.pwd == "" ? 1 : 0}"
-  name = join("", [var.globals.env,"-",var.globals.project,"-","deploy","-","admin","-","pwd"])
-  key_vault_id = "${data.azurerm_key_vault.keyvault[0].id}"
+  count = local.config.pwd == "" ? 1 : 0
+  name = join("", [local.config.globals.env,"-",local.config.globals.project,"-","deploy","-","admin","-","pwd"])
+  key_vault_id = data.azurerm_key_vault.keyvault[0].id
   provider = azurerm.ScSc-PBMMVDCSandbox
 }
 
@@ -59,11 +42,11 @@ data "azurerm_key_vault_secret" "pwd" {
 ------------------------------------------------------------------*/
 module "init" {
   #source = "git::https://github.com/kealeyg/onboarding_Init.git"
-  source = "../onboarding_Init/"
-  globals = var.globals
+  source = "../../onboarding_Init/"
+  globals = local.config.globals
   keyvault = {
-    user = var.user == "" ? data.azurerm_key_vault_secret.user[0].value : var.user
-    pwd = var.pwd == "" ? data.azurerm_key_vault_secret.pwd[0].value : var.pwd
+    user = local.config.user == "" ? data.azurerm_key_vault_secret.user[0].value : local.config.user
+    pwd = local.config.pwd == "" ? data.azurerm_key_vault_secret.pwd[0].value : local.config.pwd
   }
   providers = {azurerm.sub  = azurerm.ScSc-PBMMVDCSandbox}
 }
