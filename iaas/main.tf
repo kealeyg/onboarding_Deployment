@@ -38,12 +38,14 @@ data "azurerm_key_vault_secret" "pwd" {
   provider = azurerm.ScSc-PBMMVDCSandbox
 }
 
-/* Init
+/* Iaas
 ------------------------------------------------------------------*/
-module "init" {
+module "Iaas" {
   #source = "git::https://github.com/kealeyg/onboarding_Iaas.git"
-  source = "../../onboarding_Init/"
+  source = "../../onboarding_Iaas/"
   globals = local.config.globals
+  vnet = local.config.vnet
+  snet = cidrsubnets(local.config.vnet,2,2)
   keyvault = {
     user = local.config.user == "" ? data.azurerm_key_vault_secret.user[0].value : local.config.user
     pwd = local.config.pwd == "" ? data.azurerm_key_vault_secret.pwd[0].value : local.config.pwd
@@ -53,4 +55,4 @@ module "init" {
 
 /* Output
 ------------------------------------------------------------------*/
-output "init" {value = module.init.moduleOutput}
+output "Iaas" {value = module.Iaas.moduleOutput}
