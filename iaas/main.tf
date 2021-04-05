@@ -8,6 +8,15 @@ locals {
 
 /* Provider
 ------------------------------------------------------------------*/
+/*terraform {
+  backend "azurerm" {
+    container_name = "tfstate"
+    storage_account_name = "scdcmw857stg"
+    key                  = "m0/ZpNE7crLPTY5ArpulfaDHJYkXGr6f3VIWIYRjFkujyRskzpkNf5RST9pkVthOPAmRxENVvGmL4SyKdFj2iw=="
+    #snapshot = "true"
+  } 
+}  
+*/
 provider "azurerm" {
   alias = "ScSc-PBMMVDCSandbox"
   features {}
