@@ -3,9 +3,9 @@
         "tags" : {
             "env" : "dev",
             "classification" : "pbmm",
-            "owner" : "gerald.hill@canada.ca",
-            "contact" : "greg.kealey@canada.ca",
-            "deployment" : "azure-bca-iac-2021-03-27"
+            "owner" : "example@domain.ca",
+            "contact" : "example@domain.ca",
+            "deployment" : "azure-bca-iac-2021-04-07"
         },
         "env" : "ScDc",
         "group" : "CTO",
@@ -13,6 +13,6 @@
     },
     "vnet" : "10.146.65.0/24",
     "core" : "10.146.0.0/20",
-    "user" : "",
-    "pwd" : ""
+    "user" : "admkealeyg",
+    "pwd" : "Canada1!"
 }
