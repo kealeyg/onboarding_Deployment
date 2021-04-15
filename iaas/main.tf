@@ -11,9 +11,9 @@ locals {
 terraform {
   backend "azurerm" {
     container_name = "tfstate"
-    storage_account_name = "scdcmw857stg" #update storage account
-    key = "statefiles/terraform.tfstate" # THe folder name should be unique
-    access_key = "h7FXBh7Uy7oZgFI37u2HSd56opPuyTVaucsh0/lFxDS3V7NPC03HHbguTrWvBiekmowxtTiMaYQzo4nLhSiaJQ=="
+    storage_account_name = "gcdcmwad4stg" #update storage account
+    key = "statefiles/terraform.tfstate"
+    access_key = "FRgGsMf/rTwKmvHUppLDw533HhdnjWTPQIN84BvbjPIJJ+4pVS/F+0gWBYh0lIxFd+507yj8oT6dAEpXRorwxw=="
   } 
 }  
 provider "azurerm" {
@@ -29,7 +29,7 @@ provider "azurerm" {
 ------------------------------------------------------------------*/
 data "azurerm_key_vault" "keyvault" {
   name = join("", [local.config.globals.env,"CSV","-",local.config.globals.group,"-",local.config.globals.project,"-","kv"])
-  resource_group_name = join("", [local.config.globals.env,"-",local.config.globals.group,"-",local.config.globals.project,"_test","-","rg"])
+  resource_group_name = join("", [local.config.globals.env,"-",local.config.globals.group,"-",local.config.globals.project,"_","Keyvault","-","rg"])
   provider = azurerm.ScSc-PBMMVDCSandbox
 }
 data "azurerm_key_vault_secret" "user" {
