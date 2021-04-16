@@ -8,7 +8,7 @@
             "deployment" : "azure-bca-iac-2021-04-07"
         },
         "env" : "GcDc",
-        "group" : "DCSB",
+        "group" : "CTO",
         "project" : "MW"
     },
     "vnet" : "10.146.65.0/24",

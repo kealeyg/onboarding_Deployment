@@ -41,8 +41,8 @@ data "azurerm_key_vault_secret" "pwd" {
 /* Init
 ------------------------------------------------------------------*/
 module "init" {
-  #source = "git::https://github.com/kealeyg/onboarding_Init.git"
-  source = "../../onboarding_Init/"
+  source = "git::https://github.com/kealeyg/onboarding_Init.git"
+  #source = "../../onboarding_Init/"
   globals = local.config.globals
   keyvault = {
     user = local.config.user == "" ? data.azurerm_key_vault_secret.user[0].value : local.config.user

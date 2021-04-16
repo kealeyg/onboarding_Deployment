@@ -46,8 +46,8 @@ data "azurerm_key_vault_secret" "pwd" {
 /* Iaas
 ------------------------------------------------------------------*/
 module "Iaas" {
-  #source = "git::https://github.com/kealeyg/onboarding_Iaas.git"
-  source = "../../onboarding_Iaas/"
+  source = "git::https://github.com/kealeyg/onboarding_Iaas.git"
+  #source = "../../onboarding_Iaas/"
   globals = local.config.globals
   vnet = local.config.vnet
   core = local.config.core
