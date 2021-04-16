@@ -22,7 +22,7 @@ provider "azurerm" {
 data "azurerm_key_vault" "keyvault" {
   count = local.config.user == "" ? 1 : 0
   name = join("", [local.config.globals.env,"CSV","-",local.config.globals.project,"-","kv"])
-  resource_group_name = join("", [local.config.globals.env,"-",local.config.globals.group,"-",local.config.globals.project,"_","Keyvault","-","rg"])
+  resource_group_name = join("", [local.config.globals.env,"-",local.config.globals.group,"-",local.config.globals.project,"-","Keyvault","-","rg"])
   provider = azurerm.envsub
 }
 data "azurerm_key_vault_secret" "user" {
