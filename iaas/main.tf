@@ -11,9 +11,9 @@ locals {
 terraform {
   backend "azurerm" {
     container_name = "tfstate"
-    storage_account_name = "gcdcmwad4stg" #update storage account
+    storage_account_name = "gcdcmw75cstg" #update storage account
     key = "CORE/terraform.tfstate"
-    access_key = "+DNXBSFf6+J+YL1QUt1m/8YzQPK2a7TguNI8f+A+8CrKrT/DNQTLZJaWJIQ5Vz8YPTRtWPqReiMMKc7lG0vH5Q=="
+    access_key = "sJVDSex5nzHbmjOxtQ8Vi5mFi1AWRQN225qmnPRbxnxY6OSzdGKBNLuyHxf0XLqndSndX6fJ4z8lbLZIqAUtKQ=="
   } 
 }  
 provider "azurerm" {
