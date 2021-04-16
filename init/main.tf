@@ -9,7 +9,7 @@ locals {
 /* Provider
 ------------------------------------------------------------------*/
 provider "azurerm" {
-  alias = "ScSc-PBMMVDCSandbox"
+  alias = "envsub"
   features {}
   subscription_id = local.sub.subscription_id
   client_id = local.sub.client_id
@@ -23,19 +23,19 @@ data "azurerm_key_vault" "keyvault" {
   count = local.config.user == "" ? 1 : 0
   name = join("", [local.config.globals.env,"CSV","-",local.config.globals.project,"-","kv"])
   resource_group_name = join("", [local.config.globals.env,"-",local.config.globals.group,"-",local.config.globals.project,"_","Keyvault","-","rg"])
-  provider = azurerm.ScSc-PBMMVDCSandbox
+  provider = azurerm.envsub
 }
 data "azurerm_key_vault_secret" "user" {
   count = local.config.user == "" ? 1 : 0
   name = join("", [local.config.globals.env,"-",local.config.globals.project,"-","deploy","-","admin"])
   key_vault_id = data.azurerm_key_vault.keyvault[0].id
-  provider = azurerm.ScSc-PBMMVDCSandbox
+  provider = azurerm.envsub
 }
 data "azurerm_key_vault_secret" "pwd" {
   count = local.config.pwd == "" ? 1 : 0
   name = join("", [local.config.globals.env,"-",local.config.globals.project,"-","deploy","-","admin","-","pwd"])
   key_vault_id = data.azurerm_key_vault.keyvault[0].id
-  provider = azurerm.ScSc-PBMMVDCSandbox
+  provider = azurerm.envsub
 }
 
 /* Init
@@ -48,7 +48,7 @@ module "init" {
     user = local.config.user == "" ? data.azurerm_key_vault_secret.user[0].value : local.config.user
     pwd = local.config.pwd == "" ? data.azurerm_key_vault_secret.pwd[0].value : local.config.pwd
   }
-  providers = {azurerm.sub  = azurerm.ScSc-PBMMVDCSandbox}
+  providers = {azurerm.sub  = azurerm.envsub}
 }
 
 /* Output

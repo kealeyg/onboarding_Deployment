@@ -12,12 +12,12 @@ terraform {
   backend "azurerm" {
     container_name = "tfstate"
     storage_account_name = "gcdcmwad4stg" #update storage account
-    key = "statefiles/terraform.tfstate"
-    access_key = "FRgGsMf/rTwKmvHUppLDw533HhdnjWTPQIN84BvbjPIJJ+4pVS/F+0gWBYh0lIxFd+507yj8oT6dAEpXRorwxw=="
+    key = "CORE/terraform.tfstate"
+    access_key = "+DNXBSFf6+J+YL1QUt1m/8YzQPK2a7TguNI8f+A+8CrKrT/DNQTLZJaWJIQ5Vz8YPTRtWPqReiMMKc7lG0vH5Q=="
   } 
 }  
 provider "azurerm" {
-  alias = "ScSc-PBMMVDCSandbox"
+  alias = "envsub"
   features {}
   subscription_id = local.sub.subscription_id
   client_id = local.sub.client_id
@@ -30,17 +30,17 @@ provider "azurerm" {
 data "azurerm_key_vault" "keyvault" {
   name = join("", [local.config.globals.env,"CSV","-",local.config.globals.project,"-","kv"])
   resource_group_name = join("", [local.config.globals.env,"-",local.config.globals.group,"-",local.config.globals.project,"_","Keyvault","-","rg"])
-  provider = azurerm.ScSc-PBMMVDCSandbox
+  provider = azurerm.envsub
 }
 data "azurerm_key_vault_secret" "user" {
   name = join("", [local.config.globals.env,"-",local.config.globals.project,"-","deploy","-","admin"])
   key_vault_id = data.azurerm_key_vault.keyvault.id
-  provider = azurerm.ScSc-PBMMVDCSandbox
+  provider = azurerm.envsub
 }
 data "azurerm_key_vault_secret" "pwd" {
   name = join("", [local.config.globals.env,"-",local.config.globals.project,"-","deploy","-","admin","-","pwd"])
   key_vault_id = data.azurerm_key_vault.keyvault.id
-  provider = azurerm.ScSc-PBMMVDCSandbox
+  provider = azurerm.envsub
 }
 
 /* Iaas
@@ -56,7 +56,7 @@ module "Iaas" {
     user = data.azurerm_key_vault_secret.user.value
     pwd = data.azurerm_key_vault_secret.pwd.value
   }
-  providers = {azurerm.sub  = azurerm.ScSc-PBMMVDCSandbox}
+  providers = {azurerm.sub  = azurerm.envsub}
 }
 
 /* Output
