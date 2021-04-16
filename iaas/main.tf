@@ -28,7 +28,7 @@ provider "azurerm" {
 /* Data
 ------------------------------------------------------------------*/
 data "azurerm_key_vault" "keyvault" {
-  name = join("", [local.config.globals.env,"CSV","-",local.config.globals.group,"-",local.config.globals.project,"-","kv"])
+  name = join("", [local.config.globals.env,"CSV","-",local.config.globals.project,"-","kv"])
   resource_group_name = join("", [local.config.globals.env,"-",local.config.globals.group,"-",local.config.globals.project,"_","Keyvault","-","rg"])
   provider = azurerm.ScSc-PBMMVDCSandbox
 }
